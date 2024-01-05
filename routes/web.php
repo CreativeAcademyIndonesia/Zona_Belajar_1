@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\dashboard\userController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\registerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\welcomeController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,22 +20,40 @@ use App\Http\Controllers\welcomeController;
 */
 
 Route::get('/', [welcomeController::class, 'index'])->name('home');
-// Submission 2
-Route::prefix('dashboard')->group(function () {
-    Route::resource('users', UserController::class)->names('dashboard.users');
+Route::get('/login', [registerController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/register', [registerController::class, 'register'])->name('register');
+Route::post('/register-create', [registerController::class, 'create'])->name('register.create');
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::prefix('dashboard')->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::post('/add-user', [DashboardController::class, 'add_user'])->name('dashboard.add.user');
+        Route::put('/update-user', [DashboardController::class, 'edit_user'])->name('dashboard.update.user');
+        Route::delete('/delete-user', [DashboardController::class, 'delete_user'])->name('dashboard.delete.user');
+
+        Route::post('/add-category', [DashboardController::class, 'add_category'])->name('dashboard.add.category');
+        Route::put('/update-category', [DashboardController::class, 'edit_category'])->name('dashboard.update.category');
+        Route::delete('/delete-category', [DashboardController::class, 'delete_category'])->name('dashboard.delete.category');
+
+        Route::post('/add-product', [DashboardController::class, 'add_product'])->name('dashboard.add.product');
+        Route::put('/update-product', [DashboardController::class, 'edit_product'])->name('dashboard.update.product');
+        Route::delete('/delete-product', [DashboardController::class, 'delete_product'])->name('dashboard.delete.product');
+    });
 });
 
-Route::get('/blog', function () {
-    return view('blog');
-})->name('blog');
+// Route::get('/blog', function () {
+//     return view('blog');
+// })->name('blog');
 
-Route::get('/about', function () {
-    $data = [
-        'pageTitle' => 'Tentang Kami',
-        'content' => 'Ini adalah halaman tentang kami.'
-    ];
-    return view('about', $data);
-})->name('about');
+// Route::get('/about', function () {
+//     $data = [
+//         'pageTitle' => 'Tentang Kami',
+//         'content' => 'Ini adalah halaman tentang kami.'
+//     ];
+//     return view('about', $data);
+// })->name('about');
 
 // Route::get('/user/{id}', 'UserController@show');
 
