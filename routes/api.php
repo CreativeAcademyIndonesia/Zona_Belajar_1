@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MahasiswaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/api/mahasiswa', [MahasiswaController::class, 'index']); // Membaca semua data mahasiswa
+Route::get('/api/mahasiswa/{id}', [MahasiswaController::class, 'show']); // Membaca data mahasiswa berdasarkan ID
+Route::post('/api/mahasiswa', [MahasiswaController::class, 'store']); // Membuat data mahasiswa baru
+Route::put('/api/mahasiswa/{id}', [MahasiswaController::class, 'update']); // Memperbarui data mahasiswa
+Route::delete('/api/mahasiswa/{id}', [MahasiswaController::class, 'destroy']); // Menghapus data mahasiswa

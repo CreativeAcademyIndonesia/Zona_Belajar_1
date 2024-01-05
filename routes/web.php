@@ -55,6 +55,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
 //     return view('about', $data);
 // })->name('about');
 
+// Middleware Group untuk Produk:
+Route::middleware (['auth','user'])->group(function(){
+    // Rute CRUD Produk yang terproteksi oleh middleware 'auth' dan 'user'
+    Route::resource('produk', ProdukController::class);
+});
+// Rute Home dengan Middleware 'role:user':
+Route::get('/home',[App\Http\controllers\HomeController::class,'index'])->name('home')->middleware('role:user');
+//Route::resource (Autorisasi bisa di route atau di dalam controller)
+
 // Route::get('/user/{id}', 'UserController@show');
 
 // // Experiment
