@@ -20,6 +20,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 */
 
 Route::get('/', [welcomeController::class, 'index'])->name('home');
+Route::post('/checkout', [welcomeController::class, 'checkout'])->name('checkout');
 Route::get('/login', [registerController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -56,12 +57,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
 // })->name('about');
 
 // Middleware Group untuk Produk:
-Route::middleware (['auth','user'])->group(function(){
-    // Rute CRUD Produk yang terproteksi oleh middleware 'auth' dan 'user'
-    Route::resource('produk', ProdukController::class);
-});
+// Route::middleware (['auth','user'])->group(function(){
+//     // Rute CRUD Produk yang terproteksi oleh middleware 'auth' dan 'user'
+//     Route::resource('produk', ProdukController::class);
+// });
 // Rute Home dengan Middleware 'role:user':
-Route::get('/home',[App\Http\controllers\HomeController::class,'index'])->name('home')->middleware('role:user');
+// Route::get('/home',[App\Http\controllers\HomeController::class,'index'])->name('home')->middleware('role:user');
 //Route::resource (Autorisasi bisa di route atau di dalam controller)
 
 // Route::get('/user/{id}', 'UserController@show');

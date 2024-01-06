@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Transaksi;
+use App\Models\TransaksiItem;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -18,10 +21,30 @@ class DashboardController extends Controller
             'content' => 'Ini adalah halaman tentang kami.'
         ];
 
+        $transaksi = Transaksi::with('transaksiItems')->get();
+
+        $transaksi = $transaksi->map(function ($t) {
+            $t->items = $t->transaksiItems->map(function ($item) {
+                return [
+                    'product' => $item->product,
+                    'qty' => $item->qty,
+                    'price' => $item->price,
+                ];
+            })->toArray();
+
+            return $t;
+        });
+
+        $totalPemasukan = TransaksiItem::pluck('price');
+
+        // Menjumlahkan semua harga
+        $totalPrice = $totalPemasukan->sum();
+
+
         $user = User::all();
         $category = Category::all();
         $product = Product::all();
-        return view('dashboard.index', compact('user', 'data', 'category', 'product'));
+        return view('dashboard.index', compact('user', 'data', 'category', 'product', 'transaksi', 'totalPrice'));
     }
 
     // User

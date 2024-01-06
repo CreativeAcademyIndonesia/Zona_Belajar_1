@@ -26,11 +26,11 @@
                                         <p
                                             class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
                                             Pemasukan </p>
-                                        <h5 class="mb-2 font-bold dark:text-white">Rp. 50.000,-</h5>
-                                        <p class="mb-0 dark:text-white dark:opacity-60">
+                                        <h5 class="mb-2 font-bold dark:text-white">Rp. {{ $totalPrice }},-</h5>
+                                        {{-- <p class="mb-0 dark:text-white dark:opacity-60">
                                             <span class="text-sm font-bold leading-normal text-emerald-500">+55%</span>
                                             dari bulan lalu
-                                        </p>
+                                        </p> --}}
                                     </div>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
@@ -55,11 +55,11 @@
                                         <p
                                             class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
                                             Total Transaksi</p>
-                                        <h5 class="mb-2 font-bold dark:text-white">50</h5>
-                                        <p class="mb-0 dark:text-white dark:opacity-60">
+                                        <h5 class="mb-2 font-bold dark:text-white">{{ count($transaksi) }}</h5>
+                                        {{-- <p class="mb-0 dark:text-white dark:opacity-60">
                                             <span class="text-sm font-bold leading-normal text-emerald-500">+5%</span>
                                             dari bulan lalu
-                                        </p>
+                                        </p> --}}
                                     </div>
                                 </div>
                                 <div class="px-3 text-right basis-1/3">
@@ -76,25 +76,10 @@
 
             <!-- cards row 2 -->
             <div class="flex flex-wrap mt-6 -mx-3">
-                <div class="w-full max-w-full px-3 mt-0 lg:w-7/12 lg:flex-none">
-                    <div
-                        class="border-black/12.5 dark:bg-slate-850 dark:shadow-dark-xl shadow-xl relative z-20 flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
-                        <div class="border-black/12.5 mb-0 rounded-t-2xl border-b-0 border-solid p-6 pt-4 pb-0">
-                            <h6 class="capitalize dark:text-white">Penjualan</h6>
-                            <p class="mb-0 text-sm leading-normal dark:text-white dark:opacity-60">
-                                <i class="fa fa-arrow-up text-emerald-500"></i>
-                                <span class="font-semibold">4% more</span> in 2021
-                            </p>
-                        </div>
-                        <div class="flex-auto p-4">
-                            <div>
-                                <canvas id="chart-line" height="300"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                {{-- @include('dashboard.chart') --}}
                 @include('dashboard.user.table')
+                @include('dashboard.transaksi.table')
+
             </div>
 
             <!-- cards row 3 -->
@@ -135,7 +120,7 @@
         </div>
         <!-- end cards -->
     </main>
-    @include('dashboard.config')
+    {{-- @include('dashboard.config') --}}
 
     <script>
         const onDelete = (evt) => {
